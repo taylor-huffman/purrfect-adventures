@@ -3,6 +3,7 @@ import { Button, TextField, Box, Typography, Tabs, Tab, Alert } from '@mui/mater
 import PropTypes from 'prop-types';
 import { UserContext } from '../context/user';
 import { useNavigate } from 'react-router-dom'
+import { Bars } from 'react-loader-spinner';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -39,7 +40,15 @@ function TabPanel(props) {
 
 function Login({ authErrors, setAuthErrors }) {
 
-    console.log(authErrors)
+    const spinner = <Bars
+        height="20"
+        width="20"
+        color="#ffffff"
+        ariaLabel="bars-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
 
     useEffect(() => {
         checkSignupParam()
@@ -59,6 +68,7 @@ function Login({ authErrors, setAuthErrors }) {
         password: ''
     });
     const [errors, setErrors] = useState([])
+    const [submitting, setSubmitting] = useState(false)
 
     const handleTabChange = (event, newValue) => {
         setValue(newValue);
@@ -106,6 +116,7 @@ function Login({ authErrors, setAuthErrors }) {
 
       function handleSignupSubmit(e) {
         e.preventDefault()
+        setSubmitting(true)
         fetch(`/users`, {
             method: 'POST',
             headers: {
@@ -127,6 +138,7 @@ function Login({ authErrors, setAuthErrors }) {
         // })
         .then(r => {
             r.ok ? r.json().then(data => {
+                setSubmitting(false)
                 setSignupFormData({
                     username: '',
                     password: '',
@@ -141,6 +153,7 @@ function Login({ authErrors, setAuthErrors }) {
             })
             : r.json().then(errors => {
                 console.log(errors.errors)
+                setSubmitting(false)
                 setErrors(errors.errors)
                 // setSignupFormData({
                 //     username: '',
@@ -153,6 +166,7 @@ function Login({ authErrors, setAuthErrors }) {
 
       function handleLoginSubmit(e) {
         e.preventDefault()
+        setSubmitting(true)
         fetch(`/login`, {
             method: 'POST',
             headers: {
@@ -162,6 +176,7 @@ function Login({ authErrors, setAuthErrors }) {
         })
         .then(r => {
             r.ok ? r.json().then(data => {
+                setSubmitting(false)
                 setLoginFormData({
                     username: '',
                     password: ''
@@ -174,6 +189,7 @@ function Login({ authErrors, setAuthErrors }) {
             })
             : r.json().then(errors => {
                 console.log(errors.errors)
+                setSubmitting(false)
                 setErrors(errors.errors)
                 // setLoginFormData({
                 //     username: '',
@@ -254,7 +270,7 @@ function Login({ authErrors, setAuthErrors }) {
                             onChange={handleLoginFormChange}
                             size='small'
                         />
-                        <Button variant="contained" type='submit'>Submit</Button>
+                        <Button variant="contained" type='submit'>{submitting ? spinner : 'Submit'}</Button>
                     </Box>
                 </Box>
             </TabPanel>
@@ -309,7 +325,7 @@ function Login({ authErrors, setAuthErrors }) {
                             rows={3}
                             size='small'
                         />
-                        <Button variant="contained" type='submit'>Submit</Button>
+                        <Button variant="contained" type='submit'>{submitting ? spinner : 'Submit'}</Button>
                     </Box>
                 </Box>
             </TabPanel>
