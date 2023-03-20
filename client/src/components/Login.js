@@ -51,6 +51,7 @@ function Login({ authErrors, setAuthErrors }) {
     const [signupFormData, setSignupFormData] = useState({
         username: '',
         password: '',
+        password_confirmation: '',
         bio: ''
     });
     const [loginFormData, setLoginFormData] = useState({
@@ -72,6 +73,7 @@ function Login({ authErrors, setAuthErrors }) {
         setSignupFormData({
             username: '',
             password: '',
+            password_confirmation: '',
             bio: ''
         })
     };
@@ -128,6 +130,7 @@ function Login({ authErrors, setAuthErrors }) {
                 setSignupFormData({
                     username: '',
                     password: '',
+                    password_confirmation: '',
                     bio: ''
                 })
                 setUser(data)
@@ -282,6 +285,15 @@ function Login({ authErrors, setAuthErrors }) {
                             label="Password"
                             name="password"
                             value={signupFormData.password}
+                            type="password"
+                            onChange={handleSignUpFormChange}
+                            size='small'
+                        />
+                        <TextField
+                            id="outlined-password-confirmation"
+                            label="Confirm Password"
+                            name="password_confirmation"
+                            value={signupFormData.password_confirmation}
                             type="password"
                             onChange={handleSignUpFormChange}
                             size='small'
