@@ -8,7 +8,6 @@ import { Route, Routes } from 'react-router-dom'
 import { UserContext } from './context/user';
 import { Navigate } from 'react-router-dom'
 import { Bars } from 'react-loader-spinner'
-import CreateAdventure from './components/CreateAdventure';
 
 function App() {
 
@@ -53,14 +52,6 @@ function App() {
         <Route path='/account' element={
           isLoading ? spinner : isAuth ? (
             <Account />
-          ) : (
-            <Login authErrors={authErrors} setAuthErrors={setAuthErrors} />
-            // <Navigate to="/login" authErrors={authErrors} setAuthErrors={setAuthErrors} />
-          )
-        }/>
-        <Route path='/create/adventure' element={
-          isLoading ? spinner : isAuth ? (
-            <CreateAdventure />
           ) : (
             <Login authErrors={authErrors} setAuthErrors={setAuthErrors} />
             // <Navigate to="/login" authErrors={authErrors} setAuthErrors={setAuthErrors} />
