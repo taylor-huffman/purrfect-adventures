@@ -20,7 +20,8 @@ end
     Cat.create!(
         name: Faker::Creature::Cat.name,
         birthdate: Faker::Date.between(from: '2004-01-01', to: '2022-10-05'),
-        favorite_toy: Faker::Lorem.word
+        favorite_toy: Faker::Lorem.word,
+        breed: Faker::Creature::Cat.breed
     )
 end
 
