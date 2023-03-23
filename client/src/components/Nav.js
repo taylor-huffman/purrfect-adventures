@@ -3,51 +3,40 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-// import Button from '@mui/material/Button';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Input from '@mui/material/Input'
-import { Button, InputAdornment } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
-// import AdbIcon from '@mui/icons-material/Adb';
+import { Button } from '@mui/material';
 import { UserContext } from '../context/user';
 import Link from '@mui/material/Link';
 import { useNavigate } from 'react-router-dom';
 
-// import { useTheme } from '@mui/material/styles'
 
-const pages = ['Categories', 'Login'];
-const settings = ['Account', 'Logout'];
-const ariaLabel = { 'aria-label': 'description' };
 
 const Nav = () => {
-    // const theme = useTheme()
-    const { user, setUser, setAuthErrors } = useContext(UserContext)
+    const { setUser, setAuthErrors } = useContext(UserContext)
     const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    // const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate()
 
     const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
+
+    // const handleOpenUserMenu = (event) => {
+    //     setAnchorElUser(event.currentTarget);
+    // };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
+    // const handleCloseUserMenu = () => {
+    //     setAnchorElUser(null);
+    // };
 
     const handleLogOut = (event) => {
         fetch('/logout', {

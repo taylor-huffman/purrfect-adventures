@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { Box, Grid, Item, Typography, Container, Button, Checkbox, Stack } from '@mui/material'
-import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
-import Favorite from '@mui/icons-material/Favorite';
-import Adventures from './Adventures';
+import React from 'react'
+import { Box, Typography, Button, Stack } from '@mui/material'
+// import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+// import Favorite from '@mui/icons-material/Favorite';
+// import Adventures from './Adventures';
 
-const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
+// const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 
 function AdventureItem({ adventure, user, setUser, setAdventureFormData, setSelectedCat, id, setEditAdventureObject, setCatFormData, cats, setCats, setAdventures, adventures }) {
 
@@ -15,9 +15,6 @@ function AdventureItem({ adventure, user, setUser, setAdventureFormData, setSele
     //         return false
     //     }
     // }))
-
-
-    // console.log(heartChecked)
 
     // useEffect(() => {
     //     fetch('/adventure_likes', {
@@ -140,7 +137,6 @@ function AdventureItem({ adventure, user, setUser, setAdventureFormData, setSele
                 boolean = false
             }
         }
-        console.log(boolean)
         // return heartChecked
       }
 

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Button, TextField, Box, Typography, Tabs, Tab, Alert } from '@mui/material';
+import React, { useContext, useState } from 'react'
+import { Button, TextField, Box, Tabs, Tab, Alert } from '@mui/material';
 import PropTypes from 'prop-types';
 import { UserContext } from '../context/user';
 import { useNavigate } from 'react-router-dom'
@@ -50,11 +50,8 @@ function Login({ authErrors, setAuthErrors }) {
         visible={true}
       />
 
-    useEffect(() => {
-        checkSignupParam()
-    }, [])
 
-    const { setUser, isAuth, setIsAuth } = useContext(UserContext)
+    const { setUser, setIsAuth } = useContext(UserContext)
     const navigate = useNavigate()
     const [value, setValue] = useState(0);
     const [signupFormData, setSignupFormData] = useState({
@@ -124,18 +121,6 @@ function Login({ authErrors, setAuthErrors }) {
             },
             body: JSON.stringify(signupFormData)
         })
-        // .then(r => r.json())
-        // .then(data => {
-        //     console.log(data)
-        //     setSignupFormData({
-        //         username: '',
-        //         password: '',
-        //         bio: ''
-        //     })
-        //     setUser(data)
-        //     setIsAuth(true)
-        //     navigate('/adventures')
-        // })
         .then(r => {
             r.ok ? r.json().then(data => {
                 setSubmitting(false)
@@ -146,20 +131,12 @@ function Login({ authErrors, setAuthErrors }) {
                     bio: ''
                 })
                 setUser(data)
-                console.log(isAuth)
                 setIsAuth(true)
-                console.log(isAuth)
                 navigate('/adventures')
             })
             : r.json().then(errors => {
-                console.log(errors.errors)
                 setSubmitting(false)
                 setErrors(errors.errors)
-                // setSignupFormData({
-                //     username: '',
-                //     password: '',
-                //     bio: ''
-                // })
             })
         })
       }
@@ -182,47 +159,16 @@ function Login({ authErrors, setAuthErrors }) {
                     password: ''
                 })
                 setUser(data)
-                console.log(isAuth)
                 setIsAuth(true)
-                console.log(isAuth)
                 navigate('/adventures')
             })
             : r.json().then(errors => {
-                console.log(errors.errors)
                 setSubmitting(false)
                 setErrors(errors.errors)
-                // setLoginFormData({
-                //     username: '',
-                //     password: ''
-                // })
             })
         })
       }
 
-        const urlParams = new URL(window.location.href).searchParams;
-        const signup = urlParams.get('signup');
-        const checkSignupParam = () => {
-            if (signup) {
-                setValue(1)
-            } else return
-        }
-
-    //   function handleLoginSubmit(e) {
-    //     e.preventDefault()
-    //     fetch(`/login`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(loginFormData)
-    //     })
-    //     .then(r => r.json())
-    //     .then(data => {
-    //         console.log(data)
-    //         setUser(data)
-    //         navigate('/account')
-    //     })
-    //   }
 
     return (
         <Box sx={{ marginTop: '8vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
@@ -330,63 +276,6 @@ function Login({ authErrors, setAuthErrors }) {
                 </Box>
             </TabPanel>
         </Box>
-        // <Box sx={{ marginTop: '8vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-        //     <Box
-        //         component="form"
-        //         sx={{
-        //             '& > :not(style)': { m: 1, maxWidth: '400px', width: '90%' },
-        //             display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'
-        //         }}
-        //         noValidate
-        //         autoComplete="off"
-        //         onSubmit={handleSubmit}
-        //         >
-        //         <Typography variant='h1' component='h1'>
-        //             Login
-        //         </Typography>
-        //         <TextField
-        //             id="outlined-name"
-        //             label="Name"
-        //             name="name"
-        //             value={formData.name}
-        //             onChange={handleChange}
-        //             type="text"
-        //         />
-        //         <TextField
-        //             id="outlined-address"
-        //             label="Full Address"
-        //             name="address"
-        //             value={formData.address}
-        //             onChange={handleChange}
-        //             type="text"
-        //         />
-        //         <TextField
-        //             id="outlined-phone"
-        //             label="Phone Number"
-        //             name="phone"
-        //             value={formData.phone}
-        //             onChange={handleChange}
-        //             type="text"
-        //         />
-        //         <TextField
-        //             id="outlined-email"
-        //             label="Email"
-        //             name="email"
-        //             value={formData.email}
-        //             onChange={handleChange}
-        //             type="email"
-        //         />
-        //         <TextField
-        //             id="outlined-password"
-        //             label="Password"
-        //             name="password"
-        //             value={formData.password}
-        //             type="password"
-        //             onChange={handleChange}
-        //         />
-        //         <Button variant="contained" type='submit'>Submit</Button>
-        //     </Box>
-        // </Box>
     )
 }
 

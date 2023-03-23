@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Grid, Item, Typography, Container, Button, Checkbox, TextField, FormControl, InputLabel, Select, MenuItem, FormControlLabel, Stack, Alert, Divider } from '@mui/material'
+import { Box, Grid, Typography, Container, Button, Checkbox, TextField, FormControl, InputLabel, Select, MenuItem, FormControlLabel, Stack, Alert, Divider } from '@mui/material'
 import AdventureItem from './AdventureItem';
 import { UserContext } from '../context/user';
 import { DatePicker } from '@mui/x-date-pickers';
@@ -9,11 +9,9 @@ function Account() {
 
 
 
-    const { user, setUser, isAuth, isLoading } = useContext(UserContext)
-    const [userCats, setUserCats] = useState(user.cats)
-    // const { user, setUser, isAuth, setIsAuth } = useContext(UserContext)
+    const { user, setUser } = useContext(UserContext)
+    // const [userCats, setUserCats] = useState(user.cats)
     const [cats, setCats] = useState([])
-    // const history = useHistory()
     const [editAdventureObject, setEditAdventureObject] = useState([])
     const [adventureFormData, setAdventureFormData] = useState({
         title: '',
@@ -26,7 +24,6 @@ function Account() {
     const [birthdate, setBirthdate] = React.useState(null);
     const [errors, setErrors] = useState([])
 
-    console.log(userCats)
 
     const handleNewCatCheckedChange = (event) => {
         setNewCatChecked(event.target.checked);
@@ -90,7 +87,6 @@ function Account() {
             .then(r => {
                 if (r.ok) {
                     return r.json().then(data => {
-                    console.log(data)
                     setEditAdventureObject([])
                     setAdventures([data, ...adventures.filter(adventure => editAdventureObject.id !== adventure.id)])
                     setAdventureFormData({
@@ -112,10 +108,8 @@ function Account() {
                     //         return cats.find(cat => cat.id === data.cat_id)
                     //     }
                     //     // if (cat.id !== data.cat_id) {
-                    //     //     console.log(cats.find(cat => cat.id === data.cat_id))
                     //     //     return cats.find(cat => cat.id === data.cat_id)
                     //     // } else {
-                    //     //     console.log(cat)
                     //     //     return cat
                     //     // }
                     // })]})
@@ -123,18 +117,10 @@ function Account() {
                     setSelectedCat('')
                     setNewCatChecked(false)
                     document.getElementById(`${editAdventureObject.id}`).scrollIntoView({ behavior: "smooth" });
-                    // setUser(data)
-                    // setIsAuth(true)
-                    // history.push('/account')
                 })
                 } else {
                     return r.json().then(errors => {
-                        console.log(errors.errors)
                         setErrors(errors.errors)
-                        // setLoginFormData({
-                        //     username: '',
-                        //     password: ''
-                        // })
                     })
                 }
             })
@@ -173,7 +159,6 @@ function Account() {
                             if (r.ok) {
                                 return r.json()
                                 .then(data => {
-                                    console.log(data)
                                     setEditAdventureObject([])
                                     setCats([...cats, cat])
                                     setAdventures([data, ...adventures.filter(adventure => editAdventureObject.id !== adventure.id)])
@@ -186,30 +171,17 @@ function Account() {
                                     setSelectedCat('')
                                     setNewCatChecked(false)
                                     document.getElementById(`${editAdventureObject.id}`).scrollIntoView({ behavior: "smooth" });
-                                    // setUser(data)
-                                    // setIsAuth(true)
-                                    // history.push('/account')
                                 })
                             } else {
                                 return r.json().then(errors => {
-                                    console.log(errors.errors)
                                     setErrors(errors.errors)
-                                    // setLoginFormData({
-                                    //     username: '',
-                                    //     password: ''
-                                    // })
                                 })
                             }
                         })
                     })
                 } else {
                     return r.json().then(errors => {
-                        console.log(errors.errors)
                         setErrors(errors.errors)
-                        // setLoginFormData({
-                        //     username: '',
-                        //     password: ''
-                        // })
                     })
                 }
             })
@@ -219,17 +191,6 @@ function Account() {
 
     function handleAdventureSubmit(e) {
         e.preventDefault()
-        // if (editAdventureObject.id && selectedCat) {
-        //     // fetch(`/adventures/${editAdventureObject.id}`, {
-        //     //     method: 'PATCH',
-        //     //     headers: {
-        //     //         'Content-type': 'application/json'
-        //     //     },
-        //     //     body: JSON.stringify({
-        //     //         user_id: 
-        //     //     })
-        //     // })
-        //     console.log('test')
         if (catFormData.id) {
             fetch(`/adventures`, {
                 method: 'POST',
@@ -247,7 +208,6 @@ function Account() {
             .then(r => {
                 if (r.ok) {
                     return r.json().then(data => {
-                        console.log(data)
                         setAdventures([data, ...adventures])
                         setUser({...user, cats: [...user.cats.filter(cat => cat.id !== data.cat_id), data.cat].sort((a,b) => a.id - b.id)})
                         setErrors([])
@@ -260,18 +220,10 @@ function Account() {
                         setSelectedCat('')
                         setNewCatChecked(false)
                         document.getElementById(`${data.id}`).scrollIntoView({ behavior: "smooth" });
-                        // setUser(data)
-                        // setIsAuth(true)
-                        // history.push('/account')
                     })
                 } else {
                     return r.json().then(errors => {
-                        console.log(errors.errors)
                         setErrors(errors.errors)
-                        // setLoginFormData({
-                        //     username: '',
-                        //     password: ''
-                        // })
                     })
                 }
             })
@@ -310,7 +262,6 @@ function Account() {
                         .then(r => {
                             if (r.ok) {
                                 return r.json().then(data => {
-                                    console.log(data)
                                     setErrors([])
                                     setUser({...user, cats: [...user.cats, cat], adventures: [data, ...user.adventures]})
                                     setCats([...cats, cat])
@@ -329,18 +280,10 @@ function Account() {
                                     setSelectedCat('')
                                     setNewCatChecked(false)
                                     document.getElementById(`${data.id}`).scrollIntoView({ behavior: "smooth" });
-                                    // setUser(data)
-                                    // setIsAuth(true)
-                                    // history.push('/account')
                                 })
                             } else {
                                 return r.json().then(errors => {
-                                    console.log(errors.errors)
                                     setErrors(errors.errors)
-                                    // setLoginFormData({
-                                    //     username: '',
-                                    //     password: ''
-                                    // })
                                 })
                             }
                         })
@@ -348,12 +291,7 @@ function Account() {
                     })
                 } else {
                     return r.json().then(errors => {
-                        console.log(errors.errors)
                         setErrors(errors.errors)
-                        // setLoginFormData({
-                        //     username: '',
-                        //     password: ''
-                        // })
                     })
                 }
             })
@@ -361,7 +299,6 @@ function Account() {
         
       }
 
-      console.log(catFormData)
 
       useEffect(() => {
         fetch('/cats')
@@ -387,26 +324,12 @@ function Account() {
             },
         };
 
-        // const getAge = (dateInput) => {
-        //     let today = new Date();
-        //     let birthDate = new Date(dateInput);
-        //     let age = today.getFullYear() - birthDate.getFullYear();
-        //     let m = today.getMonth() - birthDate.getMonth();
-        //     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        //         age--;
-        //     }
-        //     return age;
-        // }
-        console.log(adventureFormData)
-        console.log(catFormData)
-        console.log(user)
-
 
 
 
     const [adventures, setAdventures] = useState([])
-    const [mostLiked, setMostLiked] = useState({})
-    const [featured, setFeatured] = useState([])
+    // const [mostLiked, setMostLiked] = useState({})
+    // const [featured, setFeatured] = useState([])
 
     
 
@@ -416,9 +339,9 @@ function Account() {
             if (r.ok) {
                 return r.json().then(data => {
                     setAdventures(data)
-                    setMostLiked(data.reduce(function(prev, current) {
-                        return (prev.total_likes > current.total_likes) ? prev : current
-                    }))
+                    // setMostLiked(data.reduce(function(prev, current) {
+                    //     return (prev.total_likes > current.total_likes) ? prev : current
+                    // }))
                 })
             } else {
                 return r.json().then(error => console.log(error))
@@ -426,14 +349,14 @@ function Account() {
         })
     }, [])
 
-    useEffect(() => {
-        fetch('/randomcat')
-        .then(r => {
-            if (r.ok) {
-                return r.json().then(cat => setFeatured(cat))
-            }
-        })
-    }, [])
+    // useEffect(() => {
+    //     fetch('/randomcat')
+    //     .then(r => {
+    //         if (r.ok) {
+    //             return r.json().then(cat => setFeatured(cat))
+    //         }
+    //     })
+    // }, [])
 
     const getAge = (dateInput) => {
         let today = new Date();
@@ -465,34 +388,29 @@ function Account() {
         document.getElementById(`${editAdventureObject.id}`).scrollIntoView({ behavior: "smooth" });
     }
 
-    const handleEditCatOnClick = (cat) => {
-        console.log(cat)
-    }
-
-    const handleDeleteCatOnClick = (cat) => {
-        console.log(cat)
-        fetch(`/cats/${cat.id}`, {
-            method: 'DELETE'
-        })
-        .then(r => {
-            if (r.ok) {
-                setUser({...user, cats: [...user.cats.filter(c => c.id !== cat.id)], adventures: [...adventures.filter(adv => {
-                    // for (let i = 0; i > adventures.length; i++) {
-                    //     return cat.id !== [i].cat_id
-                    // }
-                    return adv.cat_id !== cat.id
-                }) ]})
-                setCats(cats.filter(c => c.id !== cat.id))
-                setAdventures(adventures.filter(adv => {
-                    // for (let i = 0; i > adventures.length; i++) {
-                    //     return cat.id !== [i].cat_id
-                    // }
-                    return cat.id !== adv.cat_id
-                }))
-                // document.getElementById(`adventure-form`).scrollIntoView({ behavior: "smooth" });
-            }
-        })
-    }
+    // const handleDeleteCatOnClick = (cat) => {
+    //     fetch(`/cats/${cat.id}`, {
+    //         method: 'DELETE'
+    //     })
+    //     .then(r => {
+    //         if (r.ok) {
+    //             setUser({...user, cats: [...user.cats.filter(c => c.id !== cat.id)], adventures: [...adventures.filter(adv => {
+    //                 // for (let i = 0; i > adventures.length; i++) {
+    //                 //     return cat.id !== [i].cat_id
+    //                 // }
+    //                 return adv.cat_id !== cat.id
+    //             }) ]})
+    //             setCats(cats.filter(c => c.id !== cat.id))
+    //             setAdventures(adventures.filter(adv => {
+    //                 // for (let i = 0; i > adventures.length; i++) {
+    //                 //     return cat.id !== [i].cat_id
+    //                 // }
+    //                 return cat.id !== adv.cat_id
+    //             }))
+    //             // document.getElementById(`adventure-form`).scrollIntoView({ behavior: "smooth" });
+    //         }
+    //     })
+    // }
 
     return (
         <>
@@ -501,7 +419,6 @@ function Account() {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={8} sx={{ marginTop: '40px', display: 'flex', flexDirection: 'column' }}>
-                        {/* <Button href='/create/adventure' variant='contained' sx={{ borderRadius: '0', padding: '10px 20px', width: 'fit-content', backgroundColor: 'black', boxShadow: 'unset' }}>Post Adventure +</Button> */}
                         {/* <Box>
                             <Typography align='left' sx={{ marginTop: '20px' }}>Your Cats</Typography>
                             {user.cats && user.cats.length > 0 ? <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -597,7 +514,6 @@ function Account() {
                             setBirthdate(date);
                             setCatFormData({...catFormData, birthdate: date})
                             }}
-                            // onChange={handleNewCatFormChange}
                             renderInput={(params) => <TextField {...params} />}
                             sx={{ margin: '8px 0!important' }}
                             size='small'
