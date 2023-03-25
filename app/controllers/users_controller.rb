@@ -16,12 +16,8 @@ class UsersController < ApplicationController
 
     def create
         user = User.create!(user_params)
-        if user.valid?
-            session[:user_id] = user.id
-            render json: user
-        else
-            render :render_unprocessable_entity_response
-        end
+        session[:user_id] = user.id
+        render json: user
     end
 
     private
