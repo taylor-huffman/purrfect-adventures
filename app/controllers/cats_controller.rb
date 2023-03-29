@@ -1,6 +1,7 @@
 class CatsController < ApplicationController
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    before_action :authorize
 
     def index
         cats = Cat.all
@@ -27,6 +28,10 @@ class CatsController < ApplicationController
 
     def user_params
         params.permit(:name, :birthdate, :favorite_toy, :breed)
+    end
+
+    def authorize
+        return render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized unless session.include? :user_id
     end
 
     def render_unprocessable_entity_response(invalid)

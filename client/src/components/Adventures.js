@@ -75,6 +75,7 @@ function Adventures() {
                 },
                 body: JSON.stringify({
                     ...editAdventureObject,
+                    user_id: user.id,
                     cat_id: catFormData.id,
                     title: adventureFormData.title,
                     description: adventureFormData.description,

@@ -1,6 +1,7 @@
 class AdventuresController < ApplicationController
 
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    before_action :authorize
 
     def index
         adventures = Adventure.all
@@ -8,20 +9,22 @@ class AdventuresController < ApplicationController
     end
 
     def create
-        adventure = Adventure.create!(user_params)
-        render json: adventure
+        if params[:user_id] == session[:user_id]
+            adventure = Adventure.create!(user_params)
+            render json: adventure
+        else
+            render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
+        end
     end
 
     def update
         adventure = Adventure.find(params[:id])
-        adventure.update!(
-            user_id: params[:user_id],
-            cat_id: params[:cat_id],
-            title: params[:title],
-            description: params[:description],
-            location: params[:location]
-        )
-        render json: adventure
+        if params[:user_id] == session[:user_id]
+            adventure.update!(user_params)
+            render json: adventure
+        else
+            render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
+        end
     end
 
     def destroy
@@ -34,6 +37,10 @@ class AdventuresController < ApplicationController
 
     def user_params
         params.permit(:user_id, :cat_id, :title, :description, :location)
+    end
+
+    def authorize
+        return render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized unless session.include? :user_id
     end
 
     def render_unprocessable_entity_response(invalid)
