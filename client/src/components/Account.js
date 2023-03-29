@@ -209,7 +209,7 @@ function Account() {
                 if (r.ok) {
                     return r.json().then(data => {
                         setAdventures([data, ...adventures])
-                        setUser({...user, cats: [...user.cats.filter(cat => cat.id !== data.cat_id), data.cat].sort((a,b) => a.id - b.id)})
+                        setUser({...user, cats: [...user.cats.filter(cat => cat.id !== data.cat_id), data.cat].sort((a,b) => a.id - b.id), adventures: [data, ...user.adventures]})
                         setErrors([])
                         setAdventureFormData({
                             title: '',
@@ -419,7 +419,7 @@ function Account() {
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
                     <Grid item xs={8} sx={{ marginTop: '40px', display: 'flex', flexDirection: 'column' }}>
-                        {/* <Box>
+                        <Box>
                             <Typography align='left' sx={{ marginTop: '20px' }}>Your Cats</Typography>
                             {user.cats && user.cats.length > 0 ? <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
                                 {user.cats.map(cat => {
@@ -429,12 +429,12 @@ function Account() {
                                     <Typography align='left' sx={{ fontSize: '16px', marginTop: '0px' }}>{`${getAge(cat.birthdate)} year old ${cat.breed}`}</Typography>
                                     <Typography align='left' sx={{ fontSize: '12px', marginTop: '10px' }}>Favorite Toy</Typography>
                                     <Typography align='left' sx={{ fontSize: '16px', marginTop: '0px' }}>{cat.favorite_toy}</Typography>
-                                    <Stack sx={{ position: 'absolute', bottom: '5px', left: '12px' }} direction="row"><Button onClick={() => handleEditCatOnClick(cat)} sx={{ fontSize: '12px', marginLeft: '-8px', minWidth: 'unset', color: '#999999' }}>Edit</Button><Button onClick={() => handleDeleteCatOnClick(cat)} sx={{ fontSize: '12px', margin: '0', minWidth: 'unset', color: '#999999' }}>Delete</Button></Stack>
+                                    {/* <Stack sx={{ position: 'absolute', bottom: '5px', left: '12px' }} direction="row"><Button onClick={() => handleEditCatOnClick(cat)} sx={{ fontSize: '12px', marginLeft: '-8px', minWidth: 'unset', color: '#999999' }}>Edit</Button><Button onClick={() => handleDeleteCatOnClick(cat)} sx={{ fontSize: '12px', margin: '0', minWidth: 'unset', color: '#999999' }}>Delete</Button></Stack> */}
                                     <img alt="Black cat cut in half" src={require('../media/cat-cut-in-half.png').default} style={{ marginRight: 'auto', maxWidth: '35px', position: 'absolute', bottom: '0', right: '0' }} />
                                 </Box>
                                 })}
                             </Box> : <Typography align='left' sx={{ fontSize: '12px' }}>No cats yet</Typography>}
-                        </Box> */}
+                        </Box>
                         <Typography align='left' sx={{ marginTop: '20px' }}>Your Cat Adventures</Typography>
                         {user.adventures && user.adventures.length > 0 ? adventures.filter(adv => adv.user_id === user.id).sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).map(adventure => {
                             return (

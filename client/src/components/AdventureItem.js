@@ -111,7 +111,12 @@ function AdventureItem({ adventure, user, setUser, setAdventureFormData, setSele
         })
         .then(r => {
             if (r.ok) {
-                // setUser({...user, cats: [...user.cats.filter(cat => cat.id !== adventure.cat.id)]})
+                setUser({...user, adventures: [...user.adventures.filter(adv => adv.id !== adventure.id)], cats: [...user.cats.filter(cat => {
+                    if (user.adventures.filter(adv => adv.cat_id === adventure.cat_id).length > 1) {
+                        return cat
+                    } 
+                    return cat.id !== adventure.cat.id
+                })]})
                 setCats(cats.filter(cat => cat.id !== adventure.cat.id))
                 setAdventures(adventures.filter(adv => adv.id !== adventure.id))
                 document.getElementById(`adventure-form`).scrollIntoView({ behavior: "smooth" });
