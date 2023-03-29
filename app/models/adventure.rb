@@ -8,6 +8,7 @@ class Adventure < ApplicationRecord
     validates :description, presence: true
     validates :location, presence: true
     validates :cat_id, presence: true
+    validates :user_id, presence: true
 
     def total_likes
         self.adventure_likes.count
