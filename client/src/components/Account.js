@@ -198,7 +198,6 @@ function Account() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_id: user.id,
                     cat_id: catFormData.id,
                     title: adventureFormData.title,
                     description: adventureFormData.description,
@@ -252,7 +251,6 @@ function Account() {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                user_id: user.id,
                                 cat_id: cat.id,
                                 title: adventureFormData.title,
                                 description: adventureFormData.description,
@@ -436,7 +434,7 @@ function Account() {
                             </Box> : <Typography align='left' sx={{ fontSize: '12px' }}>No cats yet</Typography>}
                         </Box>
                         <Typography align='left' sx={{ marginTop: '20px' }}>Your Cat Adventures</Typography>
-                        {user.adventures && user.adventures.length > 0 ? adventures.filter(adv => adv.user_id === user.id).sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).map(adventure => {
+                        {user.adventures && user.adventures.length > 0 ? user.adventures.sort((a,b) => new Date(b.created_at) - new Date(a.created_at)).map(adventure => {
                             return (
                                 <AdventureItem key={adventure.id} id={adventure.id} adventure={adventure} user={user} setUser={setUser} setAdventureFormData={setAdventureFormData} setSelectedCat={setSelectedCat} setEditAdventureObject={setEditAdventureObject} setCatFormData={setCatFormData} cats={cats} setCats={setCats} setAdventures={setAdventures} adventures={adventures} />
                             )

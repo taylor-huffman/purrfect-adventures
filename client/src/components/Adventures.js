@@ -75,7 +75,6 @@ function Adventures() {
                 },
                 body: JSON.stringify({
                     ...editAdventureObject,
-                    user_id: user.id,
                     cat_id: catFormData.id,
                     title: adventureFormData.title,
                     description: adventureFormData.description,
@@ -196,7 +195,6 @@ function Adventures() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    user_id: user.id,
                     cat_id: catFormData.id,
                     title: adventureFormData.title,
                     description: adventureFormData.description,
@@ -250,7 +248,6 @@ function Adventures() {
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                user_id: user.id,
                                 cat_id: cat.id,
                                 title: adventureFormData.title,
                                 description: adventureFormData.description,
