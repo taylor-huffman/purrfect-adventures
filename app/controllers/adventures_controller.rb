@@ -11,20 +11,20 @@ class AdventuresController < ApplicationController
 
     def create
         # if params[:user_id] == session[:user_id]
-        #     adventure = Adventure.create!(user_params)
+        #     adventure = Adventure.create!(adventure_params)
         #     render json: adventure
         # else
         #     render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
         # end
         user = User.find(session[:user_id])
-        adventure = user.adventures.create!(user_params)
+        adventure = user.adventures.create!(adventure_params)
         render json: adventure
     end
 
     def update
         # adventure = Adventure.find(params[:id])
         # if params[:user_id] == session[:user_id]
-        #     adventure.update!(user_params)
+        #     adventure.update!(adventure_params)
         #     render json: adventure
         # else
         #     render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
@@ -33,7 +33,7 @@ class AdventuresController < ApplicationController
         adventure = user.adventures.find(params[:id])
         adventure = Adventure.find(params[:id])
         if user.id == adventure.user.id
-            adventure.update!(user_params)
+            adventure.update!(adventure_params)
             render json: adventure
         else
             render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
@@ -59,7 +59,7 @@ class AdventuresController < ApplicationController
 
     private
 
-    def user_params
+    def adventure_params
         params.permit(:user_id, :cat_id, :title, :description, :location)
     end
 

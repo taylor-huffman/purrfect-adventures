@@ -9,7 +9,7 @@ class CatsController < ApplicationController
     end
 
     def create
-        cat = Cat.create!(user_params)
+        cat = Cat.create!(cat_params)
         render json: cat
     end
 
@@ -26,7 +26,7 @@ class CatsController < ApplicationController
 
     private
 
-    def user_params
+    def cat_params
         params.permit(:name, :birthdate, :favorite_toy, :breed)
     end
 
