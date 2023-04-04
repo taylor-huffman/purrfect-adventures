@@ -29,17 +29,32 @@ class AdventuresController < ApplicationController
         # else
         #     render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
         # end
-        user = User.find(session[:user_id])
+        # user = User.find(session[:user_id])
         adventure = user.adventures.find(params[:id])
-        adventure.update!(user_params)
-        render json: adventure
+        adventure = Adventure.find(params[:id])
+        if user.id == adventure.user.id
+            adventure.update!(user_params)
+            render json: adventure
+        else
+            render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
+        end
     end
 
     def destroy
         user = User.find(session[:user_id])
         adventure = user.adventures.find(params[:id])
-        adventure.destroy
-        head :no_content
+        # adventure = Adventure.find(params[:id])
+        if user.id == adventure.user.id
+            adventure.destroy
+            head :no_content
+        else
+            render json: { errors: ["Sorry, you're not authorized"] }, status: :unauthorized
+        end
+    end
+
+    def most_likes
+        adventure = Adventure.most_likes
+        render json: adventure
     end
 
     private
