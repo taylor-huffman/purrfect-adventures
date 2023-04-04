@@ -14,4 +14,8 @@ class Adventure < ApplicationRecord
         self.adventure_likes.count
     end
 
+    def self.most_likes
+        self.where('lower(title) like ?', '%optio%'.downcase)
+    end
+
 end
