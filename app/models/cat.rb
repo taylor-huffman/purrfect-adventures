@@ -8,4 +8,8 @@ class Cat < ApplicationRecord
     validates :breed, presence: true
     validates :favorite_toy, presence: true
 
+    def self.random_cat
+        self.order('RANDOM()').first
+    end
+
 end

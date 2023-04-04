@@ -20,7 +20,7 @@ class CatsController < ApplicationController
     end
 
     def random
-        cat = Cat.order(Arel.sql('RANDOM()')).first
+        cat = Cat.random_cat
         render json: cat
     end
 
